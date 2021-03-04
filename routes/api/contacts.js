@@ -78,7 +78,7 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
-router.patch('/:contactID', validate.updateContact, async (req, res, next) => {
+router.patch('/:contactId', validate.updateContact, async (req, res, next) => {
   try {
     const contact = await Contacts.updateContact(
       req.params.contactId,
