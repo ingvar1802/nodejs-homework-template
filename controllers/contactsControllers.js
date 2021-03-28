@@ -52,6 +52,12 @@ const createContact= async (req, res, next) => {
       },
     });
   } catch (e) {
+    if (e.name === 'ValidationError' || e.name === 'MongoError') {
+      return next({
+        status: HttpCode.BAD_REQUEST,
+        message: e.message.replace(/"/g, ''),
+      });
+    }
     next(e);
   }
 }
@@ -59,7 +65,7 @@ const createContact= async (req, res, next) => {
 
 const removeContact= async (req, res, next) => {
   try {
-   const userId=req.user.id
+   const userId = req.user.id
    const contact = await Contacts.removeContact(req.params.id,userId);
    if (contact) {
       return res.json({
